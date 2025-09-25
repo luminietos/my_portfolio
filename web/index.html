@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-    <base href="/my_portfolio/" />
+    <base href="$FLUTTER_BASE_HREF" />
 
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
@@ -43,7 +43,11 @@
     />
 
     <!-- Apple touch icon -->
-    <link rel="apple-touch-icon" href="favicon-light-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="16x16 32x32"
+      href="favicon-light-16x16.png"
+    />
 
     <title>my_portfolio</title>
     <link rel="manifest" href="manifest.json" />
