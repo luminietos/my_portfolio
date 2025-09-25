@@ -65,7 +65,7 @@ class Header extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '･ﾟ✧',
+                      text: '-', // ･ﾟ✧'
                       style: TextStyle(
                         color: colors.primary,
                         fontWeight: txtWeight,
@@ -79,7 +79,8 @@ class Header extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '･ﾟ✧',
+                      text: '-', // ･ﾟ✧'
+
                       style: TextStyle(
                         color: colors.primary,
                         fontWeight: txtWeight,
