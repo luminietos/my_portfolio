@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:my_portfolio/utils.dart';
 import '../../theme/app_themes.dart';
 
 class ContactForm extends StatefulWidget {
@@ -122,7 +122,7 @@ class _ContactFormState extends State<ContactForm> {
             children: [
               // Animated Image
               Image.asset(
-                'assets/images/handphone_invisibg.png',
+                assetPath('/images/handphone_invisibg.png'),
                 width: 120.w,
                 height: 120.h,
                 fit: BoxFit.contain,
