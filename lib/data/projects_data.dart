@@ -18,8 +18,7 @@ final List<Project> projects = [
     ],
     rolesStack: [Roles('Cross-Platform Developer'), Roles('UI/UX Designer')],
     imagePaths: [
-      assetPath('/images/project1_1.png'),
-      assetPath('/images/project1_2.png'),
+      assetPath('images/astronaut.png'), // Replace w actual images!!
     ],
     demoUrl: 'https://demo.projectone.com',
     repoUrl: 'https://github.com/username/projectone',
@@ -48,10 +47,10 @@ final List<Project> projects = [
     ],
 
     imagePaths: [
-      assetPath('/images/pondering_lime_shadowed.png'),
-      assetPath('/images/pondering_dusk_shadowed.png'),
-      assetPath('/images/handphone_invisibg.png'),
-      assetPath('/images/astronaut.png'),
+      assetPath('images/pondering_lime_shadowed.png'),
+      assetPath('images/pondering_dusk_shadowed.png'),
+      assetPath('images/handphone_invisibg.png'),
+      assetPath('images/astronaut.png'),
     ],
     logoPath: assetPath('/images/meaningfulLogo-transparentBg.png'),
     demoUrl: 'https://demo.projecttwo.com',
