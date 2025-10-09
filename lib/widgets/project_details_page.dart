@@ -39,10 +39,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       tagRunSpacing = 6.h;
     } else if (width > 814) {
       tagSpacing = 4.w;
-      tagRunSpacing = 4.h; // less spacing on bigger screens
+      tagRunSpacing = 4.h;
     } else {
       tagSpacing = 6.w;
-      tagRunSpacing = 6.h; // default for smaller
+      tagRunSpacing = 6.h;
     }
 
     final isDark = theme.brightness == Brightness.dark;
@@ -57,7 +57,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     final onSurface = colors.primary;
     final surface = colors.surface;
 
-    // Shortcuts for optional lists
     final hasImages =
         widget.project.imagePaths != null &&
         widget.project.imagePaths!.isNotEmpty;
@@ -65,252 +64,205 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
         widget.project.myIllustrations != null &&
         widget.project.myIllustrations!.isNotEmpty;
 
-    Widget content = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              widget.project.name,
-              style: theme.textTheme.headlineMedium?.copyWith(
-                color: projectNameColor,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
+    // Reusable method for the main project content
+    Widget _buildProjectContent() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // // PROJECT NAME
+          // Text(
+          //   widget.project.name,
+          //   style: theme.textTheme.headlineMedium?.copyWith(
+          //     color: projectNameColor,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // SizedBox(height: Spacing.of(4).h),
 
-            Spacer(),
-            IconButton(
-              icon: Icon(Icons.close, color: closeIconColor),
-              onPressed: widget.onClose,
-              tooltip: 'Close',
+          // PROJECT SUMMARY
+          Text(
+            widget.project.summary,
+            style: theme.textTheme.bodyLarge?.copyWith(color: summaryColor),
+          ),
+          SizedBox(height: Spacing.of(10).h),
+
+          // TAGS
+          Wrap(
+            spacing: tagSpacing,
+            runSpacing: tagRunSpacing,
+            children: widget.project.rolesStack
+                .map((r) => RolesTag(text: r.label, onSurface: colors.primary))
+                .toList(),
+          ),
+          SizedBox(height: Spacing.of(8).h),
+          Wrap(
+            spacing: tagSpacing,
+            runSpacing: tagRunSpacing,
+            children: widget.project.techStack
+                .map(
+                  (t) => TechStackTag(
+                    text: t.label,
+                    backgroundColor: t.backgroundColor,
+                    textColor: surface,
+                  ),
+                )
+                .toList(),
+          ),
+
+          // CONDITIONAL SECTIONS
+          if (widget.project.purpose != null) ...[
+            SizedBox(height: Spacing.of(12).h),
+            Text(
+              "Purpose",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: onSurface,
+              ),
+            ),
+            SizedBox(height: Spacing.of(2).h),
+            Text(widget.project.purpose!, style: theme.textTheme.bodyLarge),
+          ],
+
+          if (widget.project.actionsAndProcess != null) ...[
+            SizedBox(height: Spacing.of(6).h),
+            Text(
+              "Actions & Process",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: onSurface,
+              ),
+            ),
+            SizedBox(height: Spacing.of(2).h),
+            Text(
+              widget.project.actionsAndProcess!,
+              style: theme.textTheme.bodyLarge,
             ),
           ],
-        ),
-        SizedBox(height: Spacing.of(4).h),
-        Text(
-          widget.project.summary,
-          style: theme.textTheme.bodyLarge?.copyWith(color: summaryColor),
-        ),
-        SizedBox(height: Spacing.of(4).h),
-        Wrap(
-          spacing: Spacing.of(2).w,
-          runSpacing: Spacing.of(2).h,
-          children: widget.project.rolesStack
-              .map((r) => RolesTag(text: r.label, onSurface: colors.primary))
-              .toList(),
-        ),
-        SizedBox(height: Spacing.of(4).h),
-        Wrap(
-          spacing: Spacing.of(2).w,
-          runSpacing: Spacing.of(2).h,
-          children: widget.project.techStack
-              .map(
-                (t) => TechStackTag(
-                  text: t.label,
-                  backgroundColor: t.backgroundColor,
-                  textColor: surface,
+
+          if (widget.project.result != null) ...[
+            SizedBox(height: Spacing.of(6).h),
+            Text(
+              "Result",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: onSurface,
+              ),
+            ),
+            SizedBox(height: Spacing.of(2).h),
+            Text(widget.project.result!, style: theme.textTheme.bodyLarge),
+          ],
+
+          // CONDITIONAL CAROUSELS
+          if (hasImages)
+            AccessibleCarousel(
+              imagePaths: widget.project.imagePaths!,
+              sectionTitle: "Screenshots",
+              onSurface: onSurface,
+            ),
+          if (hasIllustrations)
+            AccessibleCarousel(
+              imagePaths: widget.project.myIllustrations!,
+              sectionTitle: "My illustrations for this project",
+              onSurface: onSurface,
+              isHandmadeIllustrations: true, // 👈 activates the note
+            ),
+
+          // VIEW PROJECT BUTTON
+          if (widget.project.projectLink != null) ...[
+            SizedBox(height: Spacing.of(6).h),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: TextButton.icon(
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                    states,
+                  ) {
+                    if (states.contains(MaterialState.hovered)) {
+                      return onSurface.withOpacity(0.08);
+                    }
+                    return null;
+                  }),
                 ),
-              )
-              .toList(),
-        ),
+                onPressed: () async {
+                  final uri = Uri.parse(widget.project.projectLink!);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  }
+                },
+                icon: Icon(Icons.link, color: onSurface),
+                label: Text(
+                  'View Project',
+                  style: TextStyle(
+                    color: onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      );
+    }
 
-        // CONDITIONAL CAROUSELS (non-fullscreen)
-        if (hasImages)
-          AccessibleCarousel(
-            imagePaths: widget.project.imagePaths!,
-            sectionTitle: "Screenshots",
-            onSurface: onSurface,
-          ),
-        if (hasIllustrations)
-          AccessibleCarousel(
-            imagePaths: widget.project.myIllustrations!,
-            sectionTitle: "My illustrations for this project",
-            onSurface: onSurface,
-          ),
-      ],
-    );
-
-    if (widget.fullScreen) {
-      return Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.all(Spacing.of(6).w),
-        color: Colors.transparent,
+    // NON-FULLSCREEN LAYOUT
+    if (!widget.fullScreen) {
+      return Padding(
+        padding: EdgeInsets.all(Spacing.of(4).w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: Icon(Icons.close, color: closeIconColor),
-                onPressed: widget.onClose,
-                tooltip: 'Close',
-              ),
-            ),
-            SizedBox(height: Spacing.of(3).h),
-
-            // PROJECT NAME
-            Text(
-              widget.project.name,
-              style: theme.textTheme.headlineMedium?.copyWith(
-                color: projectNameColor,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.project.name,
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      color: projectNameColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: closeIconColor),
+                  onPressed: widget.onClose,
+                  tooltip: 'Close',
+                ),
+              ],
             ),
             SizedBox(height: Spacing.of(4).h),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: Spacing.of(6).h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // PROJECT SUMMARY
-                    Text(
-                      widget.project.summary,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: summaryColor,
-                      ),
-                    ),
-
-                    SizedBox(height: Spacing.of(10).h),
-
-                    // TAGS
-                    Wrap(
-                      spacing: tagSpacing,
-                      runSpacing: tagRunSpacing,
-                      children: widget.project.rolesStack
-                          .map(
-                            (r) => RolesTag(
-                              text: r.label,
-                              onSurface: colors.primary,
-                            ),
-                          )
-                          .toList(),
-                    ),
-
-                    SizedBox(height: Spacing.of(8).h),
-
-                    Wrap(
-                      spacing: tagSpacing,
-                      runSpacing: tagRunSpacing,
-                      children: widget.project.techStack
-                          .map(
-                            (t) => TechStackTag(
-                              text: t.label,
-                              backgroundColor: t.backgroundColor,
-                              textColor: surface,
-                            ),
-                          )
-                          .toList(),
-                    ),
-
-                    // CONDITIONALS
-                    if (widget.project.purpose != null) ...[
-                      SizedBox(height: Spacing.of(6).h),
-                      Text(
-                        "Purpose",
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: onSurface,
-                        ),
-                      ),
-                      SizedBox(height: Spacing.of(2).h),
-                      Text(
-                        widget.project.purpose!,
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                    ],
-
-                    if (widget.project.actionsAndProcess != null) ...[
-                      SizedBox(height: Spacing.of(6).h),
-                      Text(
-                        "Actions & Process",
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: onSurface,
-                        ),
-                      ),
-                      SizedBox(height: Spacing.of(2).h),
-                      Text(
-                        widget.project.actionsAndProcess!,
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                    ],
-
-                    if (widget.project.result != null) ...[
-                      SizedBox(height: Spacing.of(6).h),
-                      Text(
-                        "Result",
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: onSurface,
-                        ),
-                      ),
-                      SizedBox(height: Spacing.of(2).h),
-                      Text(
-                        widget.project.result!,
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                    ],
-
-                    if (widget.project.projectLink != null) ...[
-                      SizedBox(height: Spacing.of(6).h),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: TextButton.icon(
-                          style: ButtonStyle(
-                            overlayColor:
-                                WidgetStateProperty.resolveWith<Color?>((
-                                  states,
-                                ) {
-                                  if (states.contains(WidgetState.hovered)) {
-                                    return onSurface.withOpacity(0.08);
-                                  }
-                                  return null;
-                                }),
-                          ),
-                          onPressed: () async {
-                            final uri = Uri.parse(widget.project.projectLink!);
-                            if (await canLaunchUrl(uri)) {
-                              await launchUrl(uri);
-                            }
-                          },
-                          icon: Icon(Icons.link, color: onSurface),
-                          label: Text(
-                            'View Project',
-                            style: TextStyle(
-                              color: onSurface,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-
-                    // NEW: Separate accessible carousels
-                    if (hasImages)
-                      AccessibleCarousel(
-                        imagePaths: widget.project.imagePaths!,
-                        sectionTitle: "Screenshots",
-                        onSurface: onSurface,
-                      ),
-                    if (hasIllustrations)
-                      AccessibleCarousel(
-                        imagePaths: widget.project.myIllustrations!,
-                        sectionTitle: "My illustrations for this project",
-                        onSurface: onSurface,
-                        isHandmadeIllustrations: true, // 👈 activates the note
-                      ),
-                  ],
-                ),
-              ),
-            ),
+            _buildProjectContent(),
           ],
         ),
       );
     }
 
-    return Padding(padding: EdgeInsets.all(Spacing.of(4).w), child: content);
+    // FULLSCREEN LAYOUT
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.all(Spacing.of(6).w),
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close, color: closeIconColor),
+              onPressed: widget.onClose,
+              tooltip: 'Close',
+            ),
+          ),
+          SizedBox(height: Spacing.of(3).h),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: Spacing.of(6).h),
+              child: _buildProjectContent(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -112,7 +112,7 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
               ),
             ),
           ],
-          SizedBox(height: Spacing.of(3).h),
+          SizedBox(height: Spacing.of(4).h),
 
           // SECTION CONTENT
           FocusScope(
@@ -196,9 +196,11 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                               imageItem.caption!.isNotEmpty)
                             Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Spacing.of(4).w,
-                                vertical: Spacing.of(2).h,
+                              padding: EdgeInsets.only(
+                                left: Spacing.of(4).w,
+                                right: Spacing.of(4).w,
+                                top: Spacing.of(6).h,
+                                bottom: 0,
                               ),
                               color: Theme.of(context)
                                   .colorScheme
@@ -208,7 +210,6 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(
                                       color: widget.onSurface.withOpacity(0.6),
-                                      fontStyle: FontStyle.italic,
                                     ),
                                 textAlign: TextAlign.center,
                               ),

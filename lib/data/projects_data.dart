@@ -10,7 +10,7 @@ final List<Project> projects = [
     isOngoing: false,
     summary: 'AI-driven Goal Management Web Platform',
     purpose:
-        'As part of Workzep’s product development, I implemented the company’s brand identity...',
+        'Workzep is an AI-powered goal management platform designed to enhance organizational transparency, streamline workflows, and foster collaboration across teams. By intelligently tracking objectives and providing actionable insights, the platform ensures that all stakeholders remain aligned, informed, and empowered to make data-driven decisions efficiently.',
     actionsAndProcess: '''
 – Interpreted Workzep’s brand values and translated them into product design principles.
 – Built a design system defining typography, color tokens, and component behavior.
@@ -50,6 +50,19 @@ final List<Project> projects = [
     projectType: 'MOBILE APP',
     isOngoing: true,
     summary: 'A mobile app for mental well-being.',
+    purpose:
+        'Meaningful is a mobile app designed to help users enhance their life satisfaction by tracking moods, reflecting on daily experiences, and engaging in positive challenges and goal-setting exercises. It encourages self-awareness and personal growth in a supportive, non-judgmental environment.',
+
+    actionsAndProcess: '''
+– Designed an intuitive mobile interface for seamless mood logging and goal tracking.
+– Developed features to visualize life satisfaction trends and provide actionable insights.
+– Created interactive challenges and exercises that promote happiness and mindfulness.
+– Ensured accessibility and inclusivity through scalable typography, high contrast, and responsive layouts.
+– Collaborated with developers to integrate AI-powered recommendations and reminders.
+''',
+    result:
+        'Users can track their progress, gain insights into life satisfaction trends, and engage in actionable exercises that foster long-term well-being. The app provides a positive, encouraging environment that promotes reflection and self-improvement.',
+
     techStack: [
       TechStack('Flutter', Colors.blue),
       TechStack('AWS', Colors.orange),
@@ -68,8 +81,14 @@ final List<Project> projects = [
     ],
     imagePaths: [
       ProjectImage(
-        assetPath('images/pondering_lime_shadowed.png'),
-        caption: 'Second onboarding screen\'s illustration | Lime theme',
+        assetPath('images/screenshot_settings_bugreport.png'),
+        caption:
+            'Users can report any issues or bugs directly within the app. | Both modes, both themes',
+      ),
+      ProjectImage(
+        assetPath('images/screenshot_profile.png'),
+        caption:
+            'Users can change their profile picture, view their data, log out and see the app version they\'re using. | Both modes, both themes',
       ),
     ],
     myIllustrations: [
@@ -79,7 +98,7 @@ final List<Project> projects = [
       ),
       ProjectImage(
         assetPath('images/pondering_dusk_shadowed.png'),
-        caption: 'Second onboarding screen´s illustration | Dusk theme',
+        caption: 'Second onboarding screen\'s illustration | Dusk theme',
       ),
       ProjectImage(
         assetPath('images/handphone_invisibg.png'),
