@@ -49,6 +49,35 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    // Responsive carousel height + viewport fraction
+    // Responsive carousel height + viewport fraction
+    double carouselHeight;
+    double viewportFraction;
+    double dotSize;
+
+    if (width >= 1400) {
+      carouselHeight = 600;
+      viewportFraction = 0.85;
+      dotSize = 18;
+    } else if (width >= 1024) {
+      carouselHeight = 500;
+      viewportFraction = 0.88;
+      dotSize = 12;
+    } else if (width >= 814) {
+      carouselHeight = 450;
+      viewportFraction = 0.9;
+      dotSize = 10;
+    } else if (width >= 600) {
+      carouselHeight = 380;
+      viewportFraction = 0.94;
+      dotSize = 10;
+    } else {
+      carouselHeight = 300;
+      viewportFraction = 0.98; // full width on small phones
+      dotSize = 12;
+    }
     // Accessibility: Provide context with semantic grouping
     return Semantics(
       label: "${widget.sectionTitle} carousel",
@@ -94,12 +123,14 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
               child: CarouselSlider.builder(
                 carouselController: _controller,
                 options: CarouselOptions(
-                  height: Spacing.of(75).h,
+                  height: carouselHeight,
+                  viewportFraction:
+                      viewportFraction, // allow a bit of margin on sides
                   enableInfiniteScroll: true,
                   enlargeCenterPage: true,
                   autoPlay:
                       widget.imagePaths.length > 1 &&
-                      !_isPaused, // Auto-play ONLY if more than one image
+                      !_isPaused, // auto-play ONLY if more than one image
                   autoPlayInterval: const Duration(seconds: 6),
                   pauseAutoPlayOnTouch: true,
                   onPageChanged: (index, reason) {
@@ -129,10 +160,35 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                               label:
                                   "Slide ${index + 1} of ${widget.imagePaths.length}: ${widget.sectionTitle}",
                               image: true,
-                              child: Image.asset(
-                                imageItem.path,
-                                fit: BoxFit.contain,
-                                width: double.infinity,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => GestureDetector(
+                                      onTap: () => Navigator.of(context).pop(),
+                                      child: Container(
+                                        color: Colors.black.withOpacity(0.9),
+                                        alignment: Alignment.center,
+                                        child: InteractiveViewer(
+                                          panEnabled: true,
+                                          minScale: 0.5,
+                                          maxScale: 3.0,
+                                          child: Hero(
+                                            tag: imageItem.path,
+                                            child: Image.asset(
+                                              imageItem.path,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  imageItem.path,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
                           ),
@@ -212,7 +268,7 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
               ],
             ),
 
-            SizedBox(height: Spacing.of(3).h),
+            SizedBox(height: Spacing.of(4).h),
 
             // DOTS (with accessibility indicators)
             Row(
@@ -231,8 +287,8 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                       curve: Curves.easeInOut,
                     ),
                     child: Container(
-                      width: 8.w,
-                      height: 8.w,
+                      width: dotSize,
+                      height: dotSize,
                       margin: EdgeInsets.symmetric(horizontal: 2.w),
                       decoration: BoxDecoration(
                         color: _currentIndex == index

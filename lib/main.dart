@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_portfolio/data/project.dart';
 import 'package:my_portfolio/providers/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'theme/app_themes.dart';
@@ -54,17 +55,29 @@ class PortfolioApp extends ConsumerStatefulWidget {
 
 class _PortfolioAppState extends ConsumerState<PortfolioApp> {
   String currentTab = 'home';
+  Project? selectedProject; // 👈 NEW
 
   void _onTabSelected(String tab) {
     setState(() {
       currentTab = tab;
+      selectedProject = null; // clear selection when switching tabs
+    });
+  }
+
+  void _onProjectSelected(Project? project) {
+    setState(() {
+      currentTab = 'projects';
+      selectedProject = project; // 👈 set selected project
     });
   }
 
   Widget _getPage() {
     switch (currentTab) {
       case 'projects':
-        return const ProjectsPage();
+        return ProjectsPage(
+          selectedProject: selectedProject, // pass down
+          onProjectSelected: _onProjectSelected, // pass handler
+        );
       case 'about':
         return const AboutPage();
       case 'contact':

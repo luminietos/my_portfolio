@@ -28,9 +28,24 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
+    final width = MediaQuery.of(context).size.width;
 
-    // Adaptive colors
+    // Responsive spacing for tags based on screen width
+    double tagSpacing;
+    double tagRunSpacing;
+
+    if (width > 1200) {
+      tagSpacing = 6.w;
+      tagRunSpacing = 6.h;
+    } else if (width > 814) {
+      tagSpacing = 4.w;
+      tagRunSpacing = 4.h; // less spacing on bigger screens
+    } else {
+      tagSpacing = 6.w;
+      tagRunSpacing = 6.h; // default for smaller
+    }
+
+    final isDark = theme.brightness == Brightness.dark;
     final closeIconColor = isDark
         ? AppColors.darkPrimary
         : AppColors.lightPrimary;
@@ -53,21 +68,24 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: Icon(Icons.close, color: closeIconColor),
-            onPressed: widget.onClose,
-            tooltip: 'Close',
-          ),
-        ),
-        SizedBox(height: Spacing.of(3).h),
-        Text(
-          widget.project.name,
-          style: theme.textTheme.headlineMedium?.copyWith(
-            color: projectNameColor,
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          children: [
+            Text(
+              widget.project.name,
+              style: theme.textTheme.headlineMedium?.copyWith(
+                color: projectNameColor,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.close, color: closeIconColor),
+              onPressed: widget.onClose,
+              tooltip: 'Close',
+            ),
+          ],
         ),
         SizedBox(height: Spacing.of(4).h),
         Text(
@@ -90,15 +108,14 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               .map(
                 (t) => TechStackTag(
                   text: t.label,
-                  textColor: onSurface,
-                  backgroundColor: surface,
-                  borderColor: onSurface,
+                  backgroundColor: t.backgroundColor,
+                  textColor: surface,
                 ),
               )
               .toList(),
         ),
 
-        // NEW: Conditional carousels (non-fullscreen)
+        // CONDITIONAL CAROUSELS (non-fullscreen)
         if (hasImages)
           AccessibleCarousel(
             imagePaths: widget.project.imagePaths!,
@@ -156,12 +173,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       ),
                     ),
 
-                    SizedBox(height: Spacing.of(6).h),
+                    SizedBox(height: Spacing.of(10).h),
 
                     // TAGS
                     Wrap(
-                      spacing: Spacing.of(2).w,
-                      runSpacing: Spacing.of(2).h,
+                      spacing: tagSpacing,
+                      runSpacing: tagRunSpacing,
                       children: widget.project.rolesStack
                           .map(
                             (r) => RolesTag(
@@ -171,16 +188,18 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           )
                           .toList(),
                     ),
-                    SizedBox(height: Spacing.of(6).h),
+
+                    SizedBox(height: Spacing.of(8).h),
+
                     Wrap(
-                      spacing: Spacing.of(2).w,
-                      runSpacing: Spacing.of(2).h,
+                      spacing: tagSpacing,
+                      runSpacing: tagRunSpacing,
                       children: widget.project.techStack
                           .map(
                             (t) => TechStackTag(
                               text: t.label,
                               backgroundColor: t.backgroundColor,
-                              textColor: colors.surface,
+                              textColor: surface,
                             ),
                           )
                           .toList(),
