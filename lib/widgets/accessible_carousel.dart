@@ -8,14 +8,18 @@ import 'package:carousel_slider/carousel_controller.dart'
     show
         CarouselSliderController; // <-- correct controller type for carousel_slider v5.x
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_portfolio/data/project.dart';
 import 'package:my_portfolio/theme/app_themes.dart';
 
 /// A shared accessible carousel widget used for both screenshots and illustrations.
 class AccessibleCarousel extends StatefulWidget {
-  final List<String> imagePaths;
+  final List<ProjectImage> imagePaths;
   final String sectionTitle;
   final Color onSurface;
   final Color accentColor;
+
+  // Indicates if this carousel represents handmade illustrations
+  final bool isHandmadeIllustrations;
 
   const AccessibleCarousel({
     super.key,
@@ -23,6 +27,7 @@ class AccessibleCarousel extends StatefulWidget {
     required this.sectionTitle,
     required this.onSurface,
     this.accentColor = AppColors.accentOrange,
+    this.isHandmadeIllustrations = false, // default to false
   });
 
   @override
@@ -67,6 +72,17 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
               color: widget.onSurface,
             ),
           ),
+
+          // Conditional handmade note
+          if (widget.isHandmadeIllustrations) ...[
+            SizedBox(height: Spacing.of(2).h),
+            Text(
+              "All artwork shown below was created by hand — no AI tools were used in their creation.",
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: widget.onSurface.withOpacity(0.8),
+              ),
+            ),
+          ],
           SizedBox(height: Spacing.of(3).h),
 
           // SECTION CONTENT
@@ -94,17 +110,54 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                 ),
                 itemCount: widget.imagePaths.length,
                 itemBuilder: (context, index, realIndex) {
-                  final path = widget.imagePaths[index];
-                  return Semantics(
-                    label:
-                        "Slide ${index + 1} of ${widget.imagePaths.length}: ${widget.sectionTitle}",
-                    image: true,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(Spacing.of(3)),
-                      child: Image.asset(
-                        path,
-                        fit: BoxFit.contain,
-                        width: double.infinity,
+                  final imageItem = widget.imagePaths[index];
+
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(Spacing.of(3)),
+                    child: Container(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.surface, // solid background
+                      width: MediaQuery.of(
+                        context,
+                      ).size.width, // ensures full width
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Semantics(
+                              label:
+                                  "Slide ${index + 1} of ${widget.imagePaths.length}: ${widget.sectionTitle}",
+                              image: true,
+                              child: Image.asset(
+                                imageItem.path,
+                                fit: BoxFit.contain,
+                                width: double.infinity,
+                              ),
+                            ),
+                          ),
+                          if (imageItem.caption != null &&
+                              imageItem.caption!.isNotEmpty)
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Spacing.of(4).w,
+                                vertical: Spacing.of(2).h,
+                              ),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .surface, // reinforce background under text
+                              child: Text(
+                                imageItem.caption!,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: widget.onSurface.withOpacity(0.6),
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   );
@@ -158,6 +211,8 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
                 ),
               ],
             ),
+
+            SizedBox(height: Spacing.of(3).h),
 
             // DOTS (with accessibility indicators)
             Row(

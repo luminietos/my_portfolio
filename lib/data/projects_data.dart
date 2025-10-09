@@ -27,7 +27,7 @@ final List<Project> projects = [
       TechStack('React', Colors.lightBlue), // Light blue
       TechStack('AWS', Colors.orange), // Orange
       TechStack('GitHub', Colors.blueGrey), // Black
-      TechStack('Figma', Colors.pinkAccent), // Multi-colored 
+      TechStack('Figma', Colors.pinkAccent), // Multi-colored
       TechStack('EmailJS', Colors.orangeAccent), // Orange
     ],
     rolesStack: [
@@ -36,7 +36,10 @@ final List<Project> projects = [
       Roles('Brand Implementation'),
     ],
     imagePaths: [
-      assetPath('images/pondering_lime_shadowed.png'),
+      ProjectImage(
+        assetPath('images/pondering_lime_shadowed.png'),
+        caption: 'Second onboarding screen\'s illustration | Lime theme',
+      ),
     ],
     accessibilityNotes: 'WCAG AA-compliant contrast and scalable typography.',
   ),
@@ -64,13 +67,29 @@ final List<Project> projects = [
       Roles('Illustrator'),
     ],
     imagePaths: [
-      assetPath('images/pondering_lime_shadowed.png'),
+      ProjectImage(
+        assetPath('images/pondering_lime_shadowed.png'),
+        caption: 'Second onboarding screen\'s illustration | Lime theme',
+      ),
     ],
     myIllustrations: [
-      assetPath('images/pondering_lime_shadowed.png'),
-      assetPath('images/pondering_dusk_shadowed.png'),
-      assetPath('images/handphone_invisibg.png'),
-      assetPath('images/astronaut.png'),
+      ProjectImage(
+        assetPath('images/pondering_lime_shadowed.png'),
+        caption: 'Second onboarding screen\'s illustration | Lime theme',
+      ),
+      ProjectImage(
+        assetPath('images/pondering_dusk_shadowed.png'),
+        caption: 'Second onboarding screen´s illustration | Dusk theme',
+      ),
+      ProjectImage(
+        assetPath('images/handphone_invisibg.png'),
+        caption: 'Illustration for a Success screen | Neutral',
+      ),
+      ProjectImage(
+        assetPath('images/astronaut.png'),
+        caption:
+            'Third onboarding screen\'s astronaut illustration (& a metaphor for exploration and self-discovery) | Neutral',
+      ),
     ],
     logoPath: assetPath('/images/meaningfulLogo-transparentBg.png'),
     demoUrl: 'https://demo.projecttwo.com',

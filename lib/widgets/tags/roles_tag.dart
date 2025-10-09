@@ -3,8 +3,7 @@ import 'tag_widget.dart';
 
 class RolesTag extends StatelessWidget {
   final String text;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color onSurface;
   final double fontSize;
   final double horizontalPadding;
   final double verticalPadding;
@@ -12,8 +11,7 @@ class RolesTag extends StatelessWidget {
   const RolesTag({
     super.key,
     required this.text,
-    required this.backgroundColor,
-    required this.textColor,
+    required this.onSurface,
     this.fontSize = 12,
     this.horizontalPadding = 12,
     this.verticalPadding = 6,
@@ -21,13 +19,11 @@ class RolesTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color resolvedBackgroundColor = backgroundColor;
-    final Color resolvedTextColor = textColor;
-
     return TagWidget(
       text: text,
-      backgroundColor: resolvedBackgroundColor,
-      textColor: resolvedTextColor,
+      backgroundColor: Colors.transparent, // transparent background
+      textColor: onSurface, // text colored onSurface
+      borderColor: onSurface, // border also uses onSurface
       fontSize: fontSize,
       horizontalPadding: horizontalPadding,
       verticalPadding: verticalPadding,

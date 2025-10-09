@@ -4,7 +4,6 @@ import 'package:my_portfolio/data/project.dart';
 import 'package:my_portfolio/theme/app_themes.dart';
 import 'package:my_portfolio/widgets/tags/roles_tag.dart';
 import 'package:my_portfolio/widgets/tags/tech_stack_tag.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:my_portfolio/widgets/accessible_carousel.dart';
 
@@ -32,10 +31,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     final isDark = theme.brightness == Brightness.dark;
 
     // Adaptive colors
-    final closeIconColor =
-        isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
-    final projectNameColor =
-        isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+    final closeIconColor = isDark
+        ? AppColors.darkPrimary
+        : AppColors.lightPrimary;
+    final projectNameColor = isDark
+        ? AppColors.darkPrimary
+        : AppColors.lightPrimary;
     final summaryColor = isDark ? Colors.white70 : Colors.black87;
 
     final onSurface = colors.primary;
@@ -43,8 +44,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 
     // Shortcuts for optional lists
     final hasImages =
-        widget.project.imagePaths != null && widget.project.imagePaths!.isNotEmpty;
-    final hasIllustrations = widget.project.myIllustrations != null &&
+        widget.project.imagePaths != null &&
+        widget.project.imagePaths!.isNotEmpty;
+    final hasIllustrations =
+        widget.project.myIllustrations != null &&
         widget.project.myIllustrations!.isNotEmpty;
 
     Widget content = Column(
@@ -76,13 +79,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           spacing: Spacing.of(2).w,
           runSpacing: Spacing.of(2).h,
           children: widget.project.rolesStack
-              .map(
-                (r) => RolesTag(
-                  text: r.label,
-                  textColor: surface,
-                  backgroundColor: onSurface,
-                ),
-              )
+              .map((r) => RolesTag(text: r.label, onSurface: colors.primary))
               .toList(),
         ),
         SizedBox(height: Spacing.of(4).h),
@@ -135,6 +132,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               ),
             ),
             SizedBox(height: Spacing.of(3).h),
+
+            // PROJECT NAME
             Text(
               widget.project.name,
               style: theme.textTheme.headlineMedium?.copyWith(
@@ -149,13 +148,17 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // PROJECT SUMMARY
                     Text(
                       widget.project.summary,
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: summaryColor,
                       ),
                     ),
-                    SizedBox(height: Spacing.of(4).h),
+
+                    SizedBox(height: Spacing.of(6).h),
+
+                    // TAGS
                     Wrap(
                       spacing: Spacing.of(2).w,
                       runSpacing: Spacing.of(2).h,
@@ -163,13 +166,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           .map(
                             (r) => RolesTag(
                               text: r.label,
-                              textColor: surface,
-                              backgroundColor: onSurface,
+                              onSurface: colors.primary,
                             ),
                           )
                           .toList(),
                     ),
-                    SizedBox(height: Spacing.of(4).h),
+                    SizedBox(height: Spacing.of(6).h),
                     Wrap(
                       spacing: Spacing.of(2).w,
                       runSpacing: Spacing.of(2).h,
@@ -240,14 +242,14 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: TextButton.icon(
                           style: ButtonStyle(
                             overlayColor:
-                                WidgetStateProperty.resolveWith<Color?>(
-                              (states) {
-                                if (states.contains(WidgetState.hovered)) {
-                                  return onSurface.withOpacity(0.08);
-                                }
-                                return null;
-                              },
-                            ),
+                                WidgetStateProperty.resolveWith<Color?>((
+                                  states,
+                                ) {
+                                  if (states.contains(WidgetState.hovered)) {
+                                    return onSurface.withOpacity(0.08);
+                                  }
+                                  return null;
+                                }),
                           ),
                           onPressed: () async {
                             final uri = Uri.parse(widget.project.projectLink!);
@@ -279,6 +281,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         imagePaths: widget.project.myIllustrations!,
                         sectionTitle: "My illustrations for this project",
                         onSurface: onSurface,
+                        isHandmadeIllustrations: true, // 👈 activates the note
                       ),
                   ],
                 ),

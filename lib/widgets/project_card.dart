@@ -111,18 +111,16 @@ class ProjectCard extends StatelessWidget {
                       ),
                     ),
 
-                 // ROLES TAGS: left-aligned, 2px spacing horizontally and vertically
                   Wrap(
-                    spacing: 2.w, // Horizontal spacing between tags
-                    runSpacing: 2.h, // Vertical spacing between lines of tags
+                    spacing: 2.w, // horizontal spacing
+                    runSpacing: 2.h, // vertical spacing
                     alignment: WrapAlignment.start,
                     children: project.rolesStack
                         .map(
                           (r) => RolesTag(
                             text: r.label,
-                            backgroundColor: colors.background,
-                            textColor: colors.primary,
-                            // keep existing padding/font sizes as you want
+                            onSurface:
+                                colors.primary, // 👈 Use theme color here
                           ),
                         )
                         .toList(),

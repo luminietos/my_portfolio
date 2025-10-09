@@ -9,9 +9,10 @@ class Project {
   final List<TechStack> techStack;
   final List<Roles> rolesStack; // List of roles as Tags
 
-   // 🆕 Optional image sets
-  final List<String>? imagePaths;       // e.g., general project images
-  final List<String>? myIllustrations;  // e.g., custom artwork / illustrations
+  // 🆕 Optional image sets
+  final List<ProjectImage>? imagePaths; // e.g., general project images
+  final List<ProjectImage>?
+  myIllustrations; // e.g., custom artwork / illustrations
   final String? logoPath; // optional logo path
 
   final String? demoUrl;
@@ -35,8 +36,8 @@ class Project {
     required this.summary,
     required this.techStack,
     required this.rolesStack,
-    required this.imagePaths,
-    this.myIllustrations, 
+    this.imagePaths,
+    this.myIllustrations,
     this.logoPath,
     this.accessibilityNotes,
     this.demoUrl,
@@ -49,6 +50,14 @@ class Project {
     this.duration,
     this.toolsUsed,
   });
+}
+
+// 🆕 A reusable model for an image + description
+class ProjectImage {
+  final String path;
+  final String? caption; // optional descriptive text
+
+  ProjectImage(this.path, {this.caption});
 }
 
 class TechStack {
