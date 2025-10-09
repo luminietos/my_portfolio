@@ -8,25 +8,46 @@ class Project {
   final String summary;
   final List<TechStack> techStack;
   final List<Roles> rolesStack; // List of roles as Tags
-  final List<String> imagePaths; // local asset paths or URLs
+
+   // 🆕 Optional image sets
+  final List<String>? imagePaths;       // e.g., general project images
+  final List<String>? myIllustrations;  // e.g., custom artwork / illustrations
+  final String? logoPath; // optional logo path
+
   final String? demoUrl;
   final String? repoUrl;
-  final String accessibilityNotes;
-  final String? logoPath; // optional logo path
+  final String? accessibilityNotes;
+
+  // 🆕 New optional storytelling fields
+  final String? purpose;
+  final String? actionsAndProcess;
+  final String? result;
+  final String? projectLink;
+  final String? clientOrCompany;
+  final String? duration;
+  final String? toolsUsed;
 
   Project({
     required this.name,
     required this.date,
     required this.projectType,
-    this.isOngoing = false, // default to false (finished)
+    this.isOngoing = false,
     required this.summary,
     required this.techStack,
     required this.rolesStack,
     required this.imagePaths,
+    this.myIllustrations, 
+    this.logoPath,
+    this.accessibilityNotes,
     this.demoUrl,
     this.repoUrl,
-    required this.accessibilityNotes,
-    this.logoPath,
+    this.purpose,
+    this.actionsAndProcess,
+    this.result,
+    this.projectLink,
+    this.clientOrCompany,
+    this.duration,
+    this.toolsUsed,
   });
 }
 

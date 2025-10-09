@@ -24,13 +24,10 @@ class TechStackTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color resolvedBackgroundColor = backgroundColor;
-    final Color resolvedTextColor = textColor;
-
     return TagWidget(
       text: text,
-      backgroundColor: resolvedBackgroundColor,
-      textColor: resolvedTextColor,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
       fontSize: fontSize,
       horizontalPadding: horizontalPadding,
       verticalPadding: verticalPadding,

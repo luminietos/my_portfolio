@@ -111,28 +111,7 @@ class ProjectCard extends StatelessWidget {
                       ),
                     ),
 
-                  // TECH STACK TAGS: same wrap properties
-                  Wrap(
-                    spacing: 2.w,
-                    runSpacing: 2.h,
-                    alignment: WrapAlignment.start,
-                    children: project.techStack
-                        .map(
-                          (t) => TechStackTag(
-                            text: t.label,
-                            backgroundColor: colors.primary,
-                            textColor: colors.background,
-                            borderColor: colors.background,
-
-                            // keep sizes same
-                          ),
-                        )
-                        .toList(),
-                  ),
-
-                  SizedBox(height: Spacing.of(3).h),
-
-                  // ROLES TAGS: left-aligned, 2px spacing horizontally and vertically
+                 // ROLES TAGS: left-aligned, 2px spacing horizontally and vertically
                   Wrap(
                     spacing: 2.w, // Horizontal spacing between tags
                     runSpacing: 2.h, // Vertical spacing between lines of tags
@@ -144,6 +123,27 @@ class ProjectCard extends StatelessWidget {
                             backgroundColor: colors.background,
                             textColor: colors.primary,
                             // keep existing padding/font sizes as you want
+                          ),
+                        )
+                        .toList(),
+                  ),
+
+                  SizedBox(height: Spacing.of(3).h),
+
+                  // TECH STACK TAGS: same wrap properties
+                  Wrap(
+                    spacing: 2.w,
+                    runSpacing: 2.h,
+                    alignment: WrapAlignment.start,
+                    children: project.techStack
+                        .map(
+                          (t) => TechStackTag(
+                            text: t.label,
+                            backgroundColor: t.backgroundColor,
+                            textColor: colors.surface,
+                            borderColor: colors.surface,
+
+                            // keep sizes same
                           ),
                         )
                         .toList(),

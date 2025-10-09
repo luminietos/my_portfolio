@@ -28,7 +28,7 @@ Future<void> main() async {
   } else {
     // resolve system theme immediately
     final brightness = WidgetsBinding.instance.window.platformBrightness;
-    initialTheme = brightness == Brightness.dark
+    initialTheme = brightness == Brightness.light
         ? ThemeMode.dark
         : ThemeMode.light;
   }

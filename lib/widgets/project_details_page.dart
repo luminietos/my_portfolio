@@ -5,6 +5,8 @@ import 'package:my_portfolio/theme/app_themes.dart';
 import 'package:my_portfolio/widgets/tags/roles_tag.dart';
 import 'package:my_portfolio/widgets/tags/tech_stack_tag.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:my_portfolio/widgets/accessible_carousel.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   final Project project;
@@ -23,8 +25,6 @@ class ProjectDetailsPage extends StatefulWidget {
 }
 
 class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
-  int _currentImageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,86 +32,20 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     final isDark = theme.brightness == Brightness.dark;
 
     // Adaptive colors
-    final closeIconColor = isDark
-        ? AppColors.darkPrimary
-        : AppColors.lightPrimary;
-    final projectNameColor = isDark
-        ? AppColors.darkPrimary
-        : AppColors.lightPrimary;
+    final closeIconColor =
+        isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+    final projectNameColor =
+        isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
     final summaryColor = isDark ? Colors.white70 : Colors.black87;
 
     final onSurface = colors.primary;
     final surface = colors.surface;
 
-    Widget buildCarousel() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: Spacing.of(6).h),
-          // Divider above carousel
-          Container(
-            width: double.infinity,
-            height: 0.5,
-            color: AppColors.accentOrange,
-          ),
-          SizedBox(height: Spacing.of(6).h),
-          Text(
-            "My illustrations for this project",
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: onSurface,
-            ),
-          ),
-          SizedBox(height: Spacing.of(3).h),
-          CarouselSlider(
-            options: CarouselOptions(
-              height: Spacing.of(75).h,
-              enableInfiniteScroll: true,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentImageIndex = index;
-                });
-              },
-            ),
-            items: widget.project.imagePaths.map((path) {
-              return Builder(
-                builder: (context) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(Spacing.of(3)),
-                    child: Image.asset(
-                      path,
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          SizedBox(height: Spacing.of(5).h), // space above dots
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.project.imagePaths.asMap().entries.map((entry) {
-              int index = entry.key;
-              return Container(
-                width: 6.w, // smaller dot
-                height: 6.w,
-                margin: EdgeInsets.symmetric(horizontal: 1.w),
-                decoration: BoxDecoration(
-                  color: _currentImageIndex == index
-                      ? onSurface
-                      : Colors.transparent,
-                  border: Border.all(color: onSurface, width: 1),
-                  shape: BoxShape.circle,
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      );
-    }
+    // Shortcuts for optional lists
+    final hasImages =
+        widget.project.imagePaths != null && widget.project.imagePaths!.isNotEmpty;
+    final hasIllustrations = widget.project.myIllustrations != null &&
+        widget.project.myIllustrations!.isNotEmpty;
 
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +100,20 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               )
               .toList(),
         ),
-        if (widget.project.imagePaths.isNotEmpty) buildCarousel(),
+
+        // NEW: Conditional carousels (non-fullscreen)
+        if (hasImages)
+          AccessibleCarousel(
+            imagePaths: widget.project.imagePaths!,
+            sectionTitle: "Screenshots",
+            onSurface: onSurface,
+          ),
+        if (hasIllustrations)
+          AccessibleCarousel(
+            imagePaths: widget.project.myIllustrations!,
+            sectionTitle: "My illustrations for this project",
+            onSurface: onSurface,
+          ),
       ],
     );
 
@@ -230,13 +177,109 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           .map(
                             (t) => TechStackTag(
                               text: t.label,
-                              backgroundColor: Colors.transparent,
-                              textColor: colors.primary,
+                              backgroundColor: t.backgroundColor,
+                              textColor: colors.surface,
                             ),
                           )
                           .toList(),
                     ),
-                    if (widget.project.imagePaths.isNotEmpty) buildCarousel(),
+
+                    // CONDITIONALS
+                    if (widget.project.purpose != null) ...[
+                      SizedBox(height: Spacing.of(6).h),
+                      Text(
+                        "Purpose",
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: onSurface,
+                        ),
+                      ),
+                      SizedBox(height: Spacing.of(2).h),
+                      Text(
+                        widget.project.purpose!,
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    ],
+
+                    if (widget.project.actionsAndProcess != null) ...[
+                      SizedBox(height: Spacing.of(6).h),
+                      Text(
+                        "Actions & Process",
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: onSurface,
+                        ),
+                      ),
+                      SizedBox(height: Spacing.of(2).h),
+                      Text(
+                        widget.project.actionsAndProcess!,
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    ],
+
+                    if (widget.project.result != null) ...[
+                      SizedBox(height: Spacing.of(6).h),
+                      Text(
+                        "Result",
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: onSurface,
+                        ),
+                      ),
+                      SizedBox(height: Spacing.of(2).h),
+                      Text(
+                        widget.project.result!,
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    ],
+
+                    if (widget.project.projectLink != null) ...[
+                      SizedBox(height: Spacing.of(6).h),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: TextButton.icon(
+                          style: ButtonStyle(
+                            overlayColor:
+                                WidgetStateProperty.resolveWith<Color?>(
+                              (states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return onSurface.withOpacity(0.08);
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          onPressed: () async {
+                            final uri = Uri.parse(widget.project.projectLink!);
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(uri);
+                            }
+                          },
+                          icon: Icon(Icons.link, color: onSurface),
+                          label: Text(
+                            'View Project',
+                            style: TextStyle(
+                              color: onSurface,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+
+                    // NEW: Separate accessible carousels
+                    if (hasImages)
+                      AccessibleCarousel(
+                        imagePaths: widget.project.imagePaths!,
+                        sectionTitle: "Screenshots",
+                        onSurface: onSurface,
+                      ),
+                    if (hasIllustrations)
+                      AccessibleCarousel(
+                        imagePaths: widget.project.myIllustrations!,
+                        sectionTitle: "My illustrations for this project",
+                        onSurface: onSurface,
+                      ),
                   ],
                 ),
               ),
