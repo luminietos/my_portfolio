@@ -44,6 +44,8 @@ dependencies:
   carousel_slider: ^5.1.1
   http: ^1.5.0
   lottie: ^3.3.1
+  iconforest_flat_icons_social: ^1.0.0+1
+  font_awesome_flutter: ^10.9.1
 
 dev_dependencies:
   flutter_test:
@@ -66,9 +68,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # IMAGES
+  # IMAGES & ANIMATIONS
   assets:
     - assets/images/
+    - assets/animations/
 
   # FONTS
   fonts:

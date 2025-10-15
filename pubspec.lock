@@ -145,13 +145,13 @@ packages:
     source: sdk
     version: "0.0.0"
   font_awesome_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: font_awesome_flutter
-      sha256: f50ce90dbe26d977415b9540400d6778bef00894aced6358ae578abd92b14b10
+      sha256: b738e35f8bb4957896c34957baf922f99c5d415b38ddc8b070d14b7fa95715d4
       url: "https://pub.dev"
     source: hosted
-    version: "10.9.0"
+    version: "10.9.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -176,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  iconforest_flat_icons_social:
+    dependency: "direct main"
+    description:
+      name: iconforest_flat_icons_social
+      sha256: "7590e6a727620c84a812a81bfbc9b48194d5bdcd09661905c8bee87b54099186"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+1"
   leak_tracker:
     dependency: transitive
     description:
