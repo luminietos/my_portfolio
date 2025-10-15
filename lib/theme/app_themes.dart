@@ -50,12 +50,12 @@ final ThemeData darkTheme = ThemeData(
     ),
     displayMedium: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 32,
+      fontSize: 30,
       color: AppColors.darkPrimary,
     ),
     displaySmall: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 24,
+      fontSize: 20,
       color: AppColors.darkPrimary,
     ),
     bodyLarge: TextStyle(fontSize: 16, color: AppColors.darkPrimary),
@@ -82,12 +82,12 @@ final ThemeData lightTheme = ThemeData(
     ),
     displayMedium: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 32,
+      fontSize: 30,
       color: AppColors.lightPrimary,
     ),
     displaySmall: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 24,
+      fontSize: 20,
       color: AppColors.lightPrimary,
     ),
     bodyLarge: TextStyle(fontSize: 16, color: AppColors.lightPrimary),

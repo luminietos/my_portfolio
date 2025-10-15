@@ -6,8 +6,11 @@ class Project {
   final String projectType; // e.g. "Web Platform", "Mobile App"
   final bool isOngoing; // true if ongoing, false if finished
   final String summary;
+
+  // Tags!
   final List<TechStack> techStack;
-  final List<Roles> rolesStack; // List of roles as Tags
+  final List<Roles> rolesStack;
+  final List<String>? collaborationTools;
 
   // 🆕 Optional image sets
   final List<ProjectImage>? imagePaths; // e.g., general project images
@@ -28,6 +31,8 @@ class Project {
   final String? duration;
   final String? toolsUsed;
 
+  final String? collaboration;
+
   Project({
     required this.name,
     required this.date,
@@ -36,6 +41,7 @@ class Project {
     required this.summary,
     required this.techStack,
     required this.rolesStack,
+    this.collaborationTools,
     this.imagePaths,
     this.myIllustrations,
     this.logoPath,
@@ -49,6 +55,7 @@ class Project {
     this.clientOrCompany,
     this.duration,
     this.toolsUsed,
+    this.collaboration,
   });
 }
 

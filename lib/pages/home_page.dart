@@ -7,7 +7,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
 
     return Padding(
@@ -17,10 +16,9 @@ class HomePage extends StatelessWidget {
         children: [
           Text(
             'Hey there.',
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-              color: colors.primary,
-              fontFamily: 'MedievalSharp',
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.displayMedium?.copyWith(fontFamily: 'MySoul'),
           ),
           SizedBox(height: Spacing.of(6).h),
           Text(

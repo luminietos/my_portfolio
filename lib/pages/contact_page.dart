@@ -9,14 +9,19 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(Spacing.of(4).w),
+      padding: EdgeInsets.symmetric(
+        horizontal: Spacing.of(1),
+        vertical: Spacing.of(6),
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Contact Me',
-              style: Theme.of(context).textTheme.displayMedium,
+              style: Theme.of(
+                context,
+              ).textTheme.displayMedium?.copyWith(fontFamily: 'MySoul'),
             ),
             SizedBox(height: Spacing.of(6).h),
             Text(

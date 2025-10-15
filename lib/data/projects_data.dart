@@ -8,7 +8,7 @@ final List<Project> projects = [
     date: 'March 2025',
     projectType: 'WEB PLATFORM',
     isOngoing: false,
-    summary: 'AI-driven Goal Management Web Platform',
+    summary: 'An AI-driven Goal Management Web Platform.',
     purpose:
         'Workzep is an AI-powered goal management platform designed to enhance organizational transparency, streamline workflows, and foster collaboration across teams. By intelligently tracking objectives and providing actionable insights, the platform ensures that all stakeholders remain aligned, informed, and empowered to make data-driven decisions efficiently.',
     actionsAndProcess: '''
@@ -20,7 +20,7 @@ final List<Project> projects = [
     result:
         'A unified, scalable digital identity that reinforced trust and usability.',
     projectLink: 'https://www.workzep.com/',
-    clientOrCompany: 'Workzep Oy',
+    clientOrCompany: 'Taigoa Oy',
     duration: 'March–April 2025',
     techStack: [
       TechStack('Next.js', Colors.deepPurple), // Black
@@ -35,10 +35,20 @@ final List<Project> projects = [
       Roles('Developer'),
       Roles('Brand Implementation'),
     ],
+    collaborationTools: ['Slack', 'Google Meet', 'Notion', 'Workzep'],
+    collaboration: '''
+– Operated within an Agile framework emphasizing transparency and accountability.  
+– Conducted daily stand-up meetings to align goals and track blockers.  
+– Bi-weekly backlog refinement sessions for prioritizing development tasks.  
+– Weekly sprint reviews to evaluate progress and define next goals.  
+– Monthly roadmap meetings with cross-functional teams to adjust priorities and deliverables.  
+– Collaborated remotely with designers and developers across multiple time zones, maintaining English as the working language.  
+''',
     imagePaths: [
       ProjectImage(
-        assetPath('images/pondering_lime_shadowed.png'),
-        caption: 'Second onboarding screen\'s illustration | Lime theme',
+        assetPath('images/screenshot_wz_commandcenter.png'),
+        caption:
+            'The Command Center; showcasing key metrics and project statuses. | Light mode',
       ),
     ],
     accessibilityNotes: 'WCAG AA-compliant contrast and scalable typography.',
@@ -62,7 +72,8 @@ final List<Project> projects = [
 ''',
     result:
         'Users can track their progress, gain insights into life satisfaction trends, and engage in actionable exercises that foster long-term well-being. The app provides a positive, encouraging environment that promotes reflection and self-improvement.',
-
+    projectLink: 'https://taigoa.fi/projects',
+    clientOrCompany: 'Taigoa Oy',
     techStack: [
       TechStack('Flutter', Colors.blue),
       TechStack('AWS', Colors.orange),
@@ -79,6 +90,16 @@ final List<Project> projects = [
       Roles('Quality Assurance'),
       Roles('Illustrator'),
     ],
+    collaborationTools: ['Slack', 'Google Meet', 'Notion', 'Workzep'],
+    collaboration: '''
+– Followed Agile-inspired workflows with consistent sprint cadence.  
+– Daily stand-up meetings to discuss progress and blockers.  
+– Weekly design sessions between product lead and designer to iterate UI/UX.  
+– Bi-weekly backlog grooming and sprint planning to manage development priorities.  
+– Friday recaps to review weekly progress and plan the next sprint.  
+– Monthly roadmap sessions to evaluate broader goals and alignment with the team’s vision.  
+– Fully remote, cross-cultural collaboration in English.  
+''',
     imagePaths: [
       ProjectImage(
         assetPath('images/screenshot_settings_bugreport.png'),

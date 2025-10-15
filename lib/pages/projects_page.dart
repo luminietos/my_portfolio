@@ -48,22 +48,42 @@ class ProjectsPage extends StatelessWidget {
     // Default: show grid of project cards
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: Spacing.of(2).w,
-        vertical: Spacing.of(3).h,
+        horizontal: Spacing.of(1),
+        vertical: Spacing.of(6),
       ),
-      child: Wrap(
-        spacing: spacing,
-        runSpacing: spacing,
-        alignment: WrapAlignment.start,
-        children: _projects.map((project) {
-          return SizedBox(
-            width: cardWidth,
-            child: ProjectCard(
-              project: project,
-              onTap: () => onProjectSelected(project), // 👈 NEW
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'My Projects',
+              style: Theme.of(
+                context,
+              ).textTheme.displayMedium?.copyWith(fontFamily: 'MySoul'),
             ),
-          );
-        }).toList(),
+            SizedBox(height: Spacing.of(6).h),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Spacing.of(2).w,
+                vertical: Spacing.of(3).h,
+              ),
+              child: Wrap(
+                spacing: spacing,
+                runSpacing: spacing,
+                alignment: WrapAlignment.start,
+                children: _projects.map((project) {
+                  return SizedBox(
+                    width: cardWidth,
+                    child: ProjectCard(
+                      project: project,
+                      onTap: () => onProjectSelected(project),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

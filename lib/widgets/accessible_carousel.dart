@@ -85,13 +85,13 @@ class _AccessibleCarouselState extends State<AccessibleCarousel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: Spacing.of(6).h),
-          Container(
-            width: double.infinity,
-            height: 0.5,
-            color: widget.accentColor,
-          ),
-          SizedBox(height: Spacing.of(6).h),
+          // SizedBox(height: Spacing.of(6).h),
+          // Container(
+          //   width: double.infinity,
+          //   height: 0.5,
+          //   color: widget.accentColor,
+          // ),
+          // SizedBox(height: Spacing.of(6).h),
 
           // SECTION TITLE
           Text(
