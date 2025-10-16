@@ -63,7 +63,7 @@ class ProjectCard extends StatelessWidget {
                     ),
                   ),
 
-                  // Add status tag here:
+                  // STATUS TAG
                   Padding(
                     padding: EdgeInsets.only(right: Spacing.of(2).w),
                     child: StatusTag(
@@ -119,8 +119,9 @@ class ProjectCard extends StatelessWidget {
                         .map(
                           (r) => RolesTag(
                             text: r.label,
-                            onSurface:
-                                colors.primary, // 👈 Use theme color here
+                            onSurface: isDarkMode
+                                ? colors.surface
+                                : colors.onSurface,
                           ),
                         )
                         .toList(),
