@@ -137,7 +137,7 @@ final List<Project> projects = [
       ),
       ProjectImage(
         assetPath(
-          'images/screenshot_notion_documentation_accessibilitytopics.png',
+          'images/screenshot_notion__documentation_accessibilitytopics.png',
         ),
         caption:
             'The Accessibility documentation I created to ensure my project meets legal requirements and best practices.',

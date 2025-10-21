@@ -230,7 +230,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 SizedBox(height: Spacing.of(6).h),
                 AccessibleCarousel(
                   imagePaths: widget.project.accessibilityImages!,
-                  sectionTitle: "Accessibility Images",
+                  sectionTitle: "For Clarification",
                   onSurface: onSurface,
                 ),
               ],
