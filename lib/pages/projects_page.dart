@@ -33,57 +33,54 @@ class ProjectsPage extends StatelessWidget {
     final totalSpacing = spacing * (crossAxisCount - 1);
     final cardWidth = (width - totalSpacing - 32.w) / crossAxisCount;
 
-    // ignore: no_leading_underscores_for_local_identifiers
     final List<Project> _projects = projects;
 
     // 👇 Show project details page if a project is selected
     if (selectedProject != null) {
       return ProjectDetailsPage(
         project: selectedProject!,
-        onClose: () => onProjectSelected(null), // reset selection
+        onClose: () => onProjectSelected(null),
         fullScreen: false,
       );
     }
 
-    // Default: show grid of project cards
+    // ✅ Default: show grid of project cards (no internal scroll)
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: Spacing.of(1),
         vertical: Spacing.of(6),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'My Projects',
-              style: Theme.of(
-                context,
-              ).textTheme.displayMedium?.copyWith(fontFamily: 'MySoul'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'My Projects',
+            style: Theme.of(
+              context,
+            ).textTheme.displayMedium?.copyWith(fontFamily: 'MySoul'),
+          ),
+          SizedBox(height: Spacing.of(6).h),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Spacing.of(2).w,
+              vertical: Spacing.of(3).h,
             ),
-            SizedBox(height: Spacing.of(6).h),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Spacing.of(2).w,
-                vertical: Spacing.of(3).h,
-              ),
-              child: Wrap(
-                spacing: spacing,
-                runSpacing: spacing,
-                alignment: WrapAlignment.start,
-                children: _projects.map((project) {
-                  return SizedBox(
-                    width: cardWidth,
-                    child: ProjectCard(
-                      project: project,
-                      onTap: () => onProjectSelected(project),
-                    ),
-                  );
-                }).toList(),
-              ),
+            child: Wrap(
+              spacing: spacing,
+              runSpacing: spacing,
+              alignment: WrapAlignment.start,
+              children: _projects.map((project) {
+                return SizedBox(
+                  width: cardWidth,
+                  child: ProjectCard(
+                    project: project,
+                    onTap: () => onProjectSelected(project),
+                  ),
+                );
+              }).toList(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -20,7 +20,9 @@ class Project {
 
   final String? demoUrl;
   final String? repoUrl;
+
   final String? accessibilityNotes;
+  final List<ProjectImage>? accessibilityImages;
 
   // 🆕 New optional storytelling fields
   final String? purpose;
@@ -46,6 +48,7 @@ class Project {
     this.myIllustrations,
     this.logoPath,
     this.accessibilityNotes,
+    this.accessibilityImages,
     this.demoUrl,
     this.repoUrl,
     this.purpose,

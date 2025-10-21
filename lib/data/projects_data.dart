@@ -6,7 +6,7 @@ final List<Project> projects = [
   Project(
     name: 'My Portfolio',
     date: 'October 2025',
-    projectType: 'CROSS-PLATFORM PORTFOLIO',
+    projectType: 'CROSS-PLATFORM',
     isOngoing: false,
     summary:
         'A modern, responsive and accessible portfolio, built entirely with Flutter.',
@@ -33,27 +33,27 @@ final List<Project> projects = [
       TechStack('GitHub Pages', Colors.grey),
     ],
     rolesStack: [Roles('Designer'), Roles('Developer'), Roles('Illustrator')],
+
+    logoPath: assetPath('images/logo_myportfolio_black.png'),
     imagePaths: [
       ProjectImage(
-        assetPath('images/portfolio_screenshot_home.png'),
-        caption: 'Landing Page of the Portfolio | Light Mode',
-      ),
-      ProjectImage(
-        assetPath('images/portfolio_screenshot_contact.png'),
-        caption: 'Responsive Contact Page | Dark Mode',
+        assetPath('wireframe_lowfidelity_myportfolio.jpg'),
+        caption:
+            'Low-fidelity wireframe of my portfolio\'s project page\'s layout, showcasing the initial layout and structure.',
       ),
     ],
-    logoPath: assetPath('images/logo_myportfolio_black.png'),
     accessibilityNotes:
         'WCAG AA-compliant typography, scalable UI, and full keyboard navigation.',
   ),
 
+  // PROJECT | MEANINGFUL (MOBILE APP)
   Project(
     name: 'Meaningful',
     date: 'September 2024',
     projectType: 'MOBILE APP',
     isOngoing: true,
-    summary: 'A mobile app for mental well-being.',
+    summary:
+        'A mobile app focused on supporting mental well-being and personal growth.',
     purpose:
         'Meaningful is a mobile app designed to help users enhance their life satisfaction by tracking moods, reflecting on daily experiences, and engaging in positive challenges and goal-setting exercises. It encourages self-awareness and personal growth in a supportive, non-judgmental environment.',
 
@@ -94,6 +94,9 @@ final List<Project> projects = [
 – Monthly roadmap sessions to evaluate broader goals and alignment with the team’s vision.  
 – Fully remote, cross-cultural collaboration in English.  
 ''',
+    demoUrl: 'https://demo.projecttwo.com',
+    repoUrl: 'https://github.com/username/projecttwo',
+    logoPath: assetPath('/images/logo_meaningful_notxt.png'),
     imagePaths: [
       ProjectImage(
         assetPath('images/screenshot_settings_bugreport.png'),
@@ -125,18 +128,31 @@ final List<Project> projects = [
             'Third onboarding screen\'s astronaut illustration (& a metaphor for exploration and self-discovery) | Neutral',
       ),
     ],
-    logoPath: assetPath('/images/meaningfulLogo-transparentBg.png'),
-    demoUrl: 'https://demo.projecttwo.com',
-    repoUrl: 'https://github.com/username/projecttwo',
     accessibilityNotes: 'WCAG AA-compliant contrast and scalable typography.',
-    // Add other fields as needed...
+    accessibilityImages: [
+      ProjectImage(
+        assetPath('images/accessibility_legislation.jpg'),
+        caption:
+            'Accessibility legislation and standards that guided the app’s design and testing process.',
+      ),
+      ProjectImage(
+        assetPath(
+          'images/screenshot_notion_documentation_accessibilitytopics.png',
+        ),
+        caption:
+            'The Accessibility documentation I created to ensure my project meets legal requirements and best practices.',
+      ),
+    ],
+
+    // PROJECT | WORKZEP (WEB PLATFORM)
   ),
   Project(
     name: 'Workzep',
     date: 'March 2025',
     projectType: 'WEB PLATFORM',
     isOngoing: false,
-    summary: 'An AI-driven Goal Management Web Platform.',
+    summary:
+        'An AI-powered web platform for managing goals for team collaboration and transparency.',
     purpose:
         'Workzep is an AI-powered goal management platform designed to enhance organizational transparency, streamline workflows, and foster collaboration across teams. By intelligently tracking objectives and providing actionable insights, the platform ensures that all stakeholders remain aligned, informed, and empowered to make data-driven decisions efficiently.',
     actionsAndProcess: '''
@@ -179,6 +195,7 @@ final List<Project> projects = [
             'The Command Center; showcasing key metrics and project statuses. | Light mode',
       ),
     ],
+    logoPath: assetPath('images/logo_wz.png'),
     accessibilityNotes: 'WCAG AA-compliant contrast and scalable typography.',
   ),
 ];

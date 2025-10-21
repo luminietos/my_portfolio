@@ -205,6 +205,36 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 widget.project.collaboration!,
                 style: theme.textTheme.bodyLarge,
               ),
+
+            // 🆕 Accessibility Considerations Section
+            if ((widget.project.accessibilityNotes != null &&
+                    widget.project.accessibilityNotes!.isNotEmpty) ||
+                (widget.project.accessibilityImages != null &&
+                    widget.project.accessibilityImages!.isNotEmpty)) ...[
+              SizedBox(height: Spacing.of(8).h),
+              Text(
+                "Accessibility Considerations",
+                style: theme.textTheme.displaySmall?.copyWith(color: onSurface),
+              ),
+              SizedBox(height: Spacing.of(4).h),
+
+              if (widget.project.accessibilityNotes != null &&
+                  widget.project.accessibilityNotes!.isNotEmpty)
+                Text(
+                  widget.project.accessibilityNotes!,
+                  style: theme.textTheme.bodyLarge,
+                ),
+
+              if (widget.project.accessibilityImages != null &&
+                  widget.project.accessibilityImages!.isNotEmpty) ...[
+                SizedBox(height: Spacing.of(6).h),
+                AccessibleCarousel(
+                  imagePaths: widget.project.accessibilityImages!,
+                  sectionTitle: "Accessibility Images",
+                  onSurface: onSurface,
+                ),
+              ],
+            ],
           ],
 
           // Result
@@ -219,6 +249,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           ],
 
           // View Project button
+          // View Project / View Source Code button
           if (widget.project.projectLink != null) ...[
             SizedBox(height: Spacing.of(10).h),
             MouseRegion(
@@ -226,7 +257,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: double.infinity),
                 child: Padding(
-                  // 🧠 Keeps touch area large without changing layout visually
                   padding: EdgeInsets.symmetric(vertical: Spacing.of(2).h),
                   child: TextButton.icon(
                     iconAlignment: IconAlignment.start,
@@ -244,30 +274,28 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         ),
                       ),
                       padding: WidgetStateProperty.all(
-                        // 👇 This is the visible padding
-                        EdgeInsets.symmetric(
-                          horizontal: Spacing.of(2).w,
-                          vertical: Spacing.of(3).h,
+                        const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
                         ),
                       ),
-                      minimumSize: WidgetStateProperty.all(
-                        // 👇 Ensures WCAG-compliant hit area
-                        Size(Spacing.of(24).w, Spacing.of(12).h),
-                      ),
+                      minimumSize: WidgetStateProperty.all(const Size(88, 44)),
+                      elevation: WidgetStateProperty.all(1),
                     ),
-                    icon: Padding(
-                      // 👇 Nudge icon left while keeping touch target safe
-                      padding: EdgeInsets.only(left: 4.w, right: 6.w),
-                      child: Icon(Icons.link, color: surface, size: 18.w),
+                    icon: Icon(
+                      widget.project.name == 'My Portfolio'
+                          ? Icons
+                                .code // 👈 show code icon for portfolio
+                          : Icons.link, // 👈 link icon for other projects
+                      size: 18,
                     ),
-                    label: Padding(
-                      padding: EdgeInsets.only(right: 4.w),
-                      child: Text(
-                        'View Project',
-                        style: TextStyle(
-                          color: surface,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    label: Text(
+                      widget.project.name == 'My Portfolio'
+                          ? 'View Source Code'
+                          : 'View Project', // 👈 label changes dynamically
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     onPressed: () async {
@@ -276,8 +304,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         await launchUrl(
                           uri,
                           mode: LaunchMode.platformDefault,
-                          webOnlyWindowName:
-                              '_blank', // opens in new tab on web
+                          webOnlyWindowName: '_blank',
                         );
                       }
                     },
